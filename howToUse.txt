@@ -1,0 +1,34 @@
+-----------------------------------------
+--------------in html file:--------------
+1. in <head> section
+- include a reference to chartStyle.css file.
+2. in <body> section
+- insert: <div id="myChart"></div> (in this div, chart will be draw. You can use any name of id ).
+- at bottom of body section include Chart.js or Chart_min.js (min version) file
+- create script with data for chart.
+    - data to display:  var dataForChart={dataPoints: [{ x: value, y: value}, ...,{xn:value n,yn:value n} ]};    //it may be e.g. from any db
+    - data for chart:
+
+      window.onload=function(){
+        var chart = new Chart("myChart",{               // id of div with chart (the same as in body section)
+          data:{
+            title:"my first chart",                     // title of chart
+            nameXvalues:'X value',                      // title of X values
+            nameYvalues:'Y value',                      // title of Y values
+            helpAxes:{
+              X:true,                                   // display(true) or not(false) axis
+              Y:true                                    // display(true) or not(false) axis
+            },
+            chartSize:{                                 // size of svg element (chart)
+              height:500,
+              width:900
+            },
+            colors:{
+              background:'#e6e6e6',                     // background color
+              line:'#07A9EA'                            // line color
+            },
+            dataValues:dataForChart                     // name of variable where data are stored
+          }}
+        );
+        chart.rysuj();                                  // required(draw chart)
+      }
