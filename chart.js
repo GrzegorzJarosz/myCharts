@@ -14,6 +14,8 @@
       var marginLX=50;
       var marginRX=20;
 
+      var halfAx=(data.chartSize.width-marginLX)/1.3;
+
       var tabX= data.dataValues.dataPoints.map(function(o){return o.x;});//array with x values
       var tabY= data.dataValues.dataPoints.map(function(o){return o.y;});//array with y values
 
@@ -164,19 +166,34 @@
            //set parameters of label rectangle
            var rr= textNode.getComputedTextLength();
 
+           var pcX=parseFloat(pktCX);
+           var pcY=parseFloat(pktCY);
+
+           var posCorr=0;
+
+           if(pcX > halfAx){
+             posCorr=-rr+10;
+           }
+
            //width:
            var newWidth=rr+20;
            document.getElementById('recLabel').setAttribute('width', newWidth);
 
            //x-pos
-           var newXpos=parseFloat(pktCX)-50;
+           var newXpos=pcX-15+posCorr;
            document.getElementById('recLabel').setAttribute('x', newXpos);
            document.getElementById('textLabel').setAttribute('x', newXpos+10);
 
            //y-pos
-           var newYpos=parseFloat(pktCY)-40;
+           var newYpos=pcY-40;
            document.getElementById('recLabel').setAttribute('y', newYpos);
            document.getElementById('textLabel').setAttribute('y', newYpos+20);
+
+           //poli
+           var newPoints= (pcX-5)+','+(pcY-11)+' '+(pcX+5)+','+(pcY-11)+' '+ (pcX)+','+(pcY-4);
+           var newPoints2= (pcX-5)+','+(pcY-12)+' '+(pcX+5)+','+(pcY-12)+' '+ (pcX)+','+(pcY-5);
+           document.getElementById('poliLabel').setAttribute('points', newPoints );
+           document.getElementById('poliLabel2').setAttribute('points', newPoints2 );
          };
 
          //mouseover:
@@ -208,15 +225,18 @@
          return chartline;
       };
 
-//-----------------------------draw label rect---------------------------------------------
+//-----------------------------draw label -------------------------------------------------
       var labPosX=60;
       var labPosY=44;
       var recW=10;
 
-      var myText='<text id=\"textLabel\"  x="'+(labPosX+10)+'"  y="'+(labPosY+20)+'" ><tspan></tspan></text>'
-      var myRect='<rect id=\"recLabel\" x="'+labPosX+'"  y="'+labPosY+'" width="'+recW+'" height=\"30\" style=\"fill:#eeeeee;fill-opacity:0.9;stroke-width:1;stroke:rgb(0,0,0)\" />';
+      var myText='<text id=\"textLabel\"><tspan></tspan></text>'
+      var myRect='<rect id=\"recLabel\" height=\"30\" style=\"fill:#eeeeee;fill-opacity:0.9;stroke-width:1;stroke:rgb(0,0,0)\" />';
 
-      var label='<g id=\"chartLabel\">'+myRect+myText+'</g>'
+      var myPoli='<polygon id=\"poliLabel\" style=\"fill:#eeeeee;stroke:rgb(0,0,0);stroke-width:1\" />'
+      var myPoli2='<polygon id=\"poliLabel2\" style=\"fill:#eeeeee\" />'
+
+      var label='<g id=\"chartLabel\">'+myPoli+myRect+myText+myPoli2+'</g>'
 
 //--------------------final----------------------------------------------------------------
 
