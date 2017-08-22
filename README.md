@@ -1,12 +1,12 @@
-#My Chart
+# My Chart
 
-##Content
+## Content
 
 Simple js library for displaying data in chart, with index.html example.
 
 version 1.0
 
-##How to use
+## How to use
 
 1. You need two files: chart.js and chartStyle.css.
 
