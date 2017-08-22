@@ -23,7 +23,7 @@ data for chart should be object created as follows:
 var dataForChart={dataPoints: [{ x: value, y: value },  ...  , {xn:value n,yn:value n}]};
 ```
 
-and some required data for chart in that way:
+* and some required data for chart in that way:
 
 ```
 var chart= new Chart({
