@@ -1,12 +1,12 @@
-#My Chart
+# My Chart
 
-##Content
+## Content
 
 Simple js library for displaying data in chart, with index.html example.
 
 version 1.0
 
-##How to use
+## How to use
 
 1. You need two files: chart.js and chartStyle.css.
 
@@ -23,7 +23,7 @@ data for chart should be object created as follows:
 var dataForChart={dataPoints: [{ x: value, y: value },  ...  , {xn:value n,yn:value n}]};
 ```
 
-and some required data for chart in that way:
+* and some required data for chart in that way:
 
 ```
 var chart= new Chart({
