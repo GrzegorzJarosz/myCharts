@@ -1,76 +1,50 @@
 <!DOCTYPE html>
 <html>
-   <head>
-      <meta charset="utf-8">
-      <link rel="stylesheet" href="style.css">
-      <link rel="stylesheet" href="chartStyle.css">
-      <title></title>
-   </head>
-   <body>
-      <div class="container">
-         <section>
-            <h1>My Chart presentation</h1>
-            <div id="my-chart"></div>
-         </section>
-      </div>
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="chartStyle.css">
+		<title></title>
+	</head>
+	<body>
+		<div class="container">
+			<section>
+				<h1>My Chart presentation</h1>
+				<div id="my-chart"></div>
+			</section>
+		</div>
 
 
 
-      <script src="chart.js"></script>
-      <script>
-         var dataForChart={dataPoints: [
-           { x: 0, y: 74 },
-           { x: 10, y: 71 },
-           { x: 20, y: 55 },
-           { x: 30, y: 50 },
-           { x: 40, y: 65 },
-           { x: 50, y: 75 },
-           { x: 60, y: 68 },
-           { x: 70, y: 28 },
-           { x: 80, y: 34 },
-           { x: 90, y: 14 },
-           { x: 100, y: 66 },
-           { x: 110, y: 70 },
-           { x: 120, y: 55 },
-           { x: 130, y: 50 },
-           { x: 140, y: 65 },
-           { x: 150, y: 96 },
-           { x: 160, y: 68 },
-           { x: 170, y: 28 },
-           { x: 180, y: 34 },
-           { x: 190, y: 33 },
-           { x: 200, y: 71 },
-           { x: 210, y: 60 },
-           { x: 220, y: 55 },
-           { x: 230, y: 72 },
-           { x: 240, y: 65 },
-           { x: 250, y: 54 },
-           { x: 260, y: 48 },
-           { x: 270, y: 28 },
-           { x: 280, y: 34 },
-           { x: 290, y: 14 }
-         ]};
+		<script src="chart.js"></script>
+		<script>
+var dataForChart={dataPoints: [
+	{ x: 10, y: 11, l: dupa },
+	{ x: 15, y: 31 },
+	{ x: 17, y: 71 },
+	{ x: 43, y: 4 },
+]};
 
-         var chart= new Chart({
-            container: "my-chart",
-            title: "My first chart",
-            nameXval: "X values",
-            nameYval: "Y values",
-            helpAxes:{
-               X:false,
-               Y:true
-            },
-            chartSize:{
-               height:500,
-               width:900
-            },
-            colors:{
-               background:'#e6e6e6',
-               line:'#07A9EA'
-            },
-            dataValues:dataForChart
-         });
+var chart= new Chart({
+	container: "my-chart",
+	title: "My first chart",
+	nameXval: "X values",
+	nameYval: "Y values",
+	helpAxes:{
+		X:false,
+		Y:true
+	},
+	chartSize:{
+		height:500,
+		width:900
+	},
+	colors:{
+		background:'#e6e6e6',
+		line:'#07A9EA'
+	},
+	dataValues:dataForChart
+});
 
-      </script>
-   </body>
+		</script>
+	</body>
 </html>
