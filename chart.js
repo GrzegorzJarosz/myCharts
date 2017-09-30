@@ -43,7 +43,7 @@
 				return Math.round((maxValX - minValX)  / 10)
 			},
 			Y: function(){
-				return Math.round((maxValY - minValX)  / 10)
+				return Math.round(maxValY / 10)
 			}
 		};
 
