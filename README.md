@@ -6,6 +6,10 @@ Simple js library for displaying data in a chart. An example index.html has been
 
 version 1.0
 
+### live
+
+https://grzegorzjarosz.github.io/myCharts/
+
 ## How to use
 
 1. You need two files: chart.js and chartStyle.css.
