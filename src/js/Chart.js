@@ -11,6 +11,38 @@
 
 
 	/*------------------------------functions------------------------------------------------*/
+
+	//configurator
+	function configurator(confData){
+		let margins = { top:50, bottom:50, left:50, right:20 };
+		halfAx = (confData.chartSize.width-margins.left)/1.3;
+		let maxValX = Math.max.apply(Math,(
+			confData.dataValues.map(function(o){return o.x})
+		));
+		let maxValY = Math.max.apply(Math,(
+			confData.dataValues.map(function(o){return o.y})
+		));
+		minValX = Math.min.apply(Math,(
+			confData.dataValues.map(function(o){return o.x})
+		));
+		minValY = Math.min.apply(Math,(
+			confData.dataValues.map(function(o){return o.y})
+		));
+		return {
+			svgMargin: margins,
+			halfAx: halfAx,
+			maxValX: maxValX,
+			maxValY: maxValY,
+			minValX: minValX,
+			minValY: minValY,
+			dividerX:maxValX/(confData.chartSize.width-(margins.left+margins.right)),//graduation x
+			dividerY:maxValY/(confData.chartSize.height-(margins.top+margins.bottom)),//graduation y
+			zeroAxY:confData.chartSize.height-margins.bottom//zero axis y
+		}
+	}
+
+/*-------------------------------------------------------------------------------------------*/
+
 	//main svg gen
 	function mainSvgGen(width, height, color, id){
 		let svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
@@ -60,6 +92,11 @@
 			return el;
 		}
 	}
+	
+/*------------------------------------------------------------------------------*/
+			////////////////////////////////////////////////////////////////
+			///////////////////////////main/////////////////////////////////
+			////////////////////////////////////////////////////////////////
 /*------------------------------------------------------------------------------*/
 
 
@@ -69,6 +106,10 @@
 
 
 	/*---------------------------------------test---------------------------------------*/
+
+		//some configurations
+		let myConfiguration = configurator(data);
+		console.log(myConfiguration);
 
 		//chart title
 		let chartTitle = svgElGen('text', {'class':'chart-title', 'x':360, 'y':30, 'fill':'#333', 'font-family': ownSet.fontFamily  , 'text':data.title});
