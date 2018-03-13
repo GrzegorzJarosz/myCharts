@@ -1,0 +1,26 @@
+{
+  "name": "mycharts",
+  "version": "2.0.0",
+  "description": "Simple js library for displaying data in a chart. An example index.html has been provided as well.",
+  "main": "chart.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GrzegorzJarosz/myCharts.git"
+  },
+  "author": "",
+  "license": "ISC",
+
+  "bugs": {
+    "url": "https://github.com/GrzegorzJarosz/myCharts/issues"
+  },
+  "homepage": "https://github.com/GrzegorzJarosz/myCharts#readme",
+  "devDependencies": {
+  "browser-sync": "^2.18.13",
+  "gulp": "^3.9.1",
+  "gulp-concat": "^2.6.1",
+  "gulp-sass": "^3.1.0"
+}
+}

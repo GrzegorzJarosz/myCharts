@@ -2,21 +2,20 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<link rel="stylesheet" href="style.css">
-		<link rel="stylesheet" href="chartStyle.css">
+		<link rel="stylesheet" href="./css/styles.css">
 		<title>myChart</title>
 	</head>
 	<body>
 		<div class="container">
 			<section>
-				<h1>My Chart</h1>
-				<div id="my-chart"></div>
+				<h1>My Chart v.2</h1>
+				<div id="monitor"></div>
 			</section>
 		</div>
 
 
 
-		<script src="chart.js"></script>
+		<script src="js/Chart.js"></script>
 		<script>
 			var dataForChart={dataPoints: [
 				{ x: 3, y: 29 },
@@ -34,7 +33,7 @@
 			]};
 
 			var chart= new Chart({
-				container: "my-chart",
+				container: "monitor",
 				title: "My first chart",
 				nameXval: "X values",
 				nameYval: "Y values",

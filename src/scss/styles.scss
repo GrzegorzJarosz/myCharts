@@ -1,3 +1,16 @@
+@import 'colors';
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+
+
+/*---------------------------------------------------------*/
 #g-chart{
   margin:20px;
   font-family: arial;
