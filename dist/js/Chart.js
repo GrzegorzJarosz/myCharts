@@ -1,11 +1,11 @@
 (function(){
 
-	/*------------------------------settings------------------------------------------------*/
+	/*--------------------------------settings------------------------------------------------*/
 	ownSet={
 		fontFamily:'\'Open Sans\', sans-serif'
 	}
 
-	/*------------------------------settings------------------------------------------------*/
+	/*------------------------------./settings------------------------------------------------*/
 
 
 
@@ -116,7 +116,7 @@
 
 
 	this.MyChart=function(data){
-		let whereto = document.querySelector(`#${data.container}`);
+		let whereto = document.querySelector(`#${data.container}`); //container for chart
 		let svgMain = mainSvgGen(data.chartSize.width, data.chartSize.height, data.colors.background, data.container); //create main svg
 
 		//configurations
@@ -190,10 +190,83 @@
 		makeHelpLines();
 
 
-
 		//chart title
 		let chartTitle = svgElGen('text', {'class':'chart-title', 'x':360, 'y':30, 'fill':'#333', 'font-family': ownSet.fontFamily  , 'text':data.title});
 		svgMain.appendChild(chartTitle);
+
+
+		//axes titles:
+		//X:
+		let axXTitle = svgElGen('text', {
+			'class':'x-title',
+			'x':0,
+			'y':0,
+			'transform':`translate(${(data.chartSize.width)-((data.chartSize.width)*0.55)}  ${data.chartSize.height-5})`,
+			'fill':'#333',
+			'font-family': ownSet.fontFamily,
+			'text':data.nameXval
+		});
+		svgMain.appendChild(axXTitle);
+
+		//Y:
+		let axYTitle = svgElGen('text', {
+			'class': 'chart-title',
+			'x': 0,
+			'y': 5,
+			'transform': `rotate(-90) translate(-${((data.chartSize.height) - ((data.chartSize.height)*0.39))} 12) `,
+			'fill':'#333',
+			'font-family': ownSet.fontFamily,
+			'text': data.nameYval
+		});
+		svgMain.appendChild(axYTitle);
+
+
+		//axes description
+		//X:
+		let vAX_box = svgElGen('g', { 'id':'valAxX' }); // descrX container
+		let zeroVAX = svgElGen('text', {            //zero val
+			'x': myConf.svgMargin.left - 3,
+			'y': myConf.zeroAxY + 18,
+			'fill':'#333',
+			'font-family': ownSet.fontFamily,
+			'text': '0'
+		});
+		vAX_box.appendChild(zeroVAX); //add 0 to descrX container
+
+		for(let i = 1; i <= myConf.qtyX; i++){
+			let val_X = svgElGen('text', {
+				'x': i*myConf.gradAx_X + myConf.svgMargin.left - 8 - (i*0.18),
+				'y': myConf.zeroAxY + 18,
+				'fill':'#333',
+				'font-family': ownSet.fontFamily,
+				'text': myConf.gradX*i
+			});
+			vAX_box.appendChild(val_X); // add every val to container
+		}
+		svgMain.appendChild(vAX_box);
+
+		//Y:
+		let vAY_box = svgElGen('g', { 'id':'valAxY' }); // descrY container
+		// let zeroVAY = svgElGen('text', {            //zero val
+		// 	'x': myConf.svgMargin.left - 3,
+		// 	'y': myConf.zeroAxY + 18,
+		// 	'fill':'#333',
+		// 	'font-family': ownSet.fontFamily,
+		// 	'text': '0'
+		// });
+		// vAX_box.appendChild(zeroVAX); //add 0 to descrY container
+
+		for(let i = 1; i <= myConf.qtyY; i++){
+			let val_Y = svgElGen('text', {
+				'x': myConf.svgMargin.left - 20,
+				'y': ((data.chartSize.height - myConf.svgMargin.bottom) - i*myConf.gradAx_Y) + 6,
+				'fill':'#333',
+				'font-family': ownSet.fontFamily,
+				'text': myConf.gradY*i
+			});
+			vAX_box.appendChild(val_Y); // add every val to container
+		}
+		svgMain.appendChild(vAY_box);
 
 
 
