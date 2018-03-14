@@ -190,10 +190,36 @@
 		makeHelpLines();
 
 
-
 		//chart title
 		let chartTitle = svgElGen('text', {'class':'chart-title', 'x':360, 'y':30, 'fill':'#333', 'font-family': ownSet.fontFamily  , 'text':data.title});
 		svgMain.appendChild(chartTitle);
+
+
+		//axes titles:
+				//X:
+				let axXTitle = svgElGen('text', {
+					'class':'x-title',
+					'x':0,
+					'y':0,
+					'transform':`translate(${(data.chartSize.width)-((data.chartSize.width)*0.55)}  ${data.chartSize.height-5})`,
+					'fill':'#333',
+					'font-family': ownSet.fontFamily,
+					'text':data.nameXval
+				});
+				svgMain.appendChild(axXTitle);
+
+				//Y:
+				let axYTitle = svgElGen('text', {
+					'class': 'chart-title',
+					'x': 0,
+					'y': 5,
+					'transform': `rotate(-90) translate(-${((data.chartSize.height) - ((data.chartSize.height)*0.39))} 12) `,
+					'fill':'#333',
+					'font-family': ownSet.fontFamily,
+					'text': data.nameYval
+				});
+				svgMain.appendChild(axYTitle);
+
 
 
 
