@@ -120,8 +120,8 @@
 		let svgMain = mainSvgGen(data.chartSize.width, data.chartSize.height, data.colors.background, data.container); //create main svg
 
 		//configurations
-		let myConfiguration = configurator(data);
-		console.log(myConfiguration);
+		const myConf = configurator(data);
+		console.log(myConf);
 
 		//main axes
 		//X:
@@ -151,7 +151,7 @@
 		function makeHelpLines(){
 			//X help-ax
 			if(data.helpAxes.X == true){
-				let helpAxContainerX = svgElGen('g', { 'id':'pomX' });
+				const  helpAxContainerX = svgElGen('g', { 'id':'pomX' });
 				for(let i = 1; i <= myConf.qtyX; i++ ){
 					let subHLX = svgElGen('line',{
 						'class': 'pom-x',
@@ -170,7 +170,7 @@
 
 			//Y help-ax
 			if(data.helpAxes.Y == true){
-				let helpAxContainerY = svgElGen('g', { 'id':'pomY' });
+				const helpAxContainerY = svgElGen('g', { 'id':'pomY' });
 				for(let i = 1; i <= myConf.qtyY; i++ ){
 					let subHLY = svgElGen('line',{
 						'class': 'pom-y',
@@ -223,7 +223,7 @@
 
 		//axes description
 		//X:
-		let vAX_box = svgElGen('g', { 'id':'valAxX' }); // descrX container
+		const vAX_box = svgElGen('g', { 'id':'valAxX' }); // descrX container
 		let zeroVAX = svgElGen('text', {            //zero val
 			'x': myConf.svgMargin.left - 3,
 			'y': myConf.zeroAxY + 18,
@@ -246,7 +246,7 @@
 		svgMain.appendChild(vAX_box);
 
 		//Y:
-		let vAY_box = svgElGen('g', { 'id':'valAxY' }); // descrY container
+		const vAY_box = svgElGen('g', { 'id':'valAxY' }); // descrY container
 		// let zeroVAY = svgElGen('text', {            //zero val
 		// 	'x': myConf.svgMargin.left - 3,
 		// 	'y': myConf.zeroAxY + 18,
@@ -269,6 +269,37 @@
 		svgMain.appendChild(vAY_box);
 
 
+
+		//draw points
+		const pointsBox = svgElGen('g', { 'id':'points-box' });//container for points
+
+		data.dataValues.forEach(function(v, i){
+			//main circle
+			let pt = svgElGen('circle', {
+				'class':'pkt-main',
+				'cx': (v.x / myConf.dividerX) +  myConf.svgMargin.left,
+				'cy': myConf.zeroAxY - (v.y / myConf.dividerY),
+				'r':3,
+				'stroke':'black',
+				'stroke-width':1,
+				'fill':'red'
+			});
+			pointsBox.appendChild(pt); // add every pt to container
+
+			//circle-helper
+			let pt_h = svgElGen('circle', {
+				'class':'pkt-help',
+				'cx': (v.x / myConf.dividerX) +  myConf.svgMargin.left,
+				'cy': myConf.zeroAxY - (v.y / myConf.dividerY),
+				'r':7,
+				'opacity': 0.1
+			});
+			pointsBox.appendChild(pt_h); // add every pt to container
+		});
+		svgMain.appendChild(pointsBox);
+
+
+/*-------------------------------------------------------------------------------------------*/
 
 		whereto.appendChild(svgMain); // append svg in monitor
 	}
