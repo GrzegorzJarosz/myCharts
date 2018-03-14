@@ -1,16 +1,15 @@
-(function(){
+'use strict';
+const MyChart =(function(){
 
-	/*--------------------------------settings------------------------------------------------*/
-	ownSet={
-		fontFamily:'\'Open Sans\', sans-serif'
+	/*-------------------------------------settings------------------------------------------------*/
+	const ownSet={
+		fontFamily:'\'Open Sans\', sans-serif',
+		fontSize: '12px'
 	}
 
-	/*------------------------------./settings------------------------------------------------*/
 
 
-
-
-	/*------------------------------functions------------------------------------------------*/
+	/*------------------------------helper functions-----------------------------------------------*/
 
 	//configurator
 	function configurator(confData){
@@ -56,7 +55,7 @@
 		}
 	}
 
-/*-------------------------------------------------------------------------------------------*/
+	/*---------------------------------------------------------------------------------------------*/
 
 	//main svg gen
 	function mainSvgGen(width, height, color, id){
@@ -69,9 +68,9 @@
 		return svg;
 	}
 
-/*-------------------------------------------------------------------------------------------*/
+	/*---------------------------------------------------------------------------------------------*/
 
-//svg element gen
+	//svg element gen
 	function svgElGen(type, attrSet){
 
 		/*
@@ -83,7 +82,7 @@
 
 		*/
 
-		if(type === 'text' || type ==='line' || type ==='path' || type === 'circle'){
+		if(type === 'text' || type ==='line' || type ==='path' || type === 'circle'|| type === 'tspan'|| type === 'rect'|| type === 'polygon'){
 
 			let el= document.createElementNS('http://www.w3.org/2000/svg',type)
 
@@ -102,26 +101,66 @@
 			}
 			return el;
 		}else{
-			console.log('incorrect name of svg_el , <g> was created');
+			//console.log('incorrect name of svg_el , <g> was created');
 			let el= document.createElementNS('http://www.w3.org/2000/svg','g');
+			for(const prop in attrSet){
+				el.setAttribute( prop , attrSet[prop] );
+			}
 			return el;
 		}
 	}
 
-/*------------------------------------------------------------------------------*/
-			////////////////////////////////////////////////////////////////
-			///////////////////////////main/////////////////////////////////
-			////////////////////////////////////////////////////////////////
-/*------------------------------------------------------------------------------*/
+	/*---------------------------------------------------------------------------------------------*/
+
+	//labelCreator
+	function labelcreator(){
+		const labBox = svgElGen('g', {'id':'chartLabel', 'style': 'display:block'});
+
+		let poli1 = svgElGen('polygon',{
+			'id':'polilabel-1',
+			'style':'fill:#eeeeee; stroke:rgb(0,0,0); stroke-width:1'
+		});
+
+		let poli2 = svgElGen('polygon',{
+			'id':'polilabel-2',
+			'style':'fill:#eeeeee'
+		});
+
+		let labText = svgElGen('text',{'id':'textLabel', 'font-family': ownSet.fontFamily, 'font-size':ownSet.fontSize});
+			let labSpan = svgElGen('tspan',{'text':''});
+		labText.appendChild(labSpan);
+
+		let labRect = svgElGen('rect', {
+			'id': 'recLabel',
+			'height': 30,
+			'style':'fill:#eeeeee; stroke:rgb(0,0,0); stroke-width:1; fill-opacity:0.9'
+		});
+
+		labBox.appendChild(poli1);
+		labBox.appendChild(labRect);
+		labBox.appendChild(labText);
+		labBox.appendChild(poli2);
+
+		return labBox;
+	}
+	/*---------------------------------------------------------------------------------------------*/
+					/*------------------------------------------------------------------------------*/
+								////////////////////////////////////////////////////////////////
+								///////////////////////////main/////////////////////////////////
+								////////////////////////////////////////////////////////////////
+					/*------------------------------------------------------------------------------*/
+	/*---------------------------------------------------------------------------------------------*/
 
 
-	this.MyChart=function(data){
+	const MyChart=function(data){
+
 		let whereto = document.querySelector(`#${data.container}`); //container for chart
 		let svgMain = mainSvgGen(data.chartSize.width, data.chartSize.height, data.colors.background, data.container); //create main svg
 
-		//configurations
 		const myConf = configurator(data);
-		console.log(myConf);
+		//console.log(myConf);
+
+		/*---------------------------------------------------------------------------------------------*/
 
 		//main axes
 		//X:
@@ -146,6 +185,7 @@
 		});
 		svgMain.appendChild(axisY);
 
+		/*---------------------------------------------------------------------------------------------*/
 
 		//help axes
 		function makeHelpLines(){
@@ -189,11 +229,21 @@
 		}
 		makeHelpLines();
 
+		/*---------------------------------------------------------------------------------------------*/
 
 		//chart title
-		let chartTitle = svgElGen('text', {'class':'chart-title', 'x':360, 'y':30, 'fill':'#333', 'font-family': ownSet.fontFamily  , 'text':data.title});
+		let chartTitle = svgElGen('text', {
+			'class':'chart-title',
+			'x':data.chartSize.width * 0.4,
+			'y':30,
+			'fill':'#333',
+			'font-family': ownSet.fontFamily,
+			'font-weight': 'bold',
+			'text':data.title
+		});
 		svgMain.appendChild(chartTitle);
 
+		/*---------------------------------------------------------------------------------------------*/
 
 		//axes titles:
 		//X:
@@ -204,7 +254,8 @@
 			'transform':`translate(${(data.chartSize.width)-((data.chartSize.width)*0.55)}  ${data.chartSize.height-5})`,
 			'fill':'#333',
 			'font-family': ownSet.fontFamily,
-			'text':data.nameXval
+			'font-size':ownSet.fontSize,
+			'text': data.nameXval
 		});
 		svgMain.appendChild(axXTitle);
 
@@ -216,10 +267,12 @@
 			'transform': `rotate(-90) translate(-${((data.chartSize.height) - ((data.chartSize.height)*0.39))} 12) `,
 			'fill':'#333',
 			'font-family': ownSet.fontFamily,
+			'font-size':ownSet.fontSize,
 			'text': data.nameYval
 		});
 		svgMain.appendChild(axYTitle);
 
+		/*---------------------------------------------------------------------------------------------*/
 
 		//axes description
 		//X:
@@ -229,6 +282,7 @@
 			'y': myConf.zeroAxY + 18,
 			'fill':'#333',
 			'font-family': ownSet.fontFamily,
+			'font-size':ownSet.fontSize,
 			'text': '0'
 		});
 		vAX_box.appendChild(zeroVAX); //add 0 to descrX container
@@ -239,6 +293,7 @@
 				'y': myConf.zeroAxY + 18,
 				'fill':'#333',
 				'font-family': ownSet.fontFamily,
+				'font-size':ownSet.fontSize,
 				'text': myConf.gradX*i
 			});
 			vAX_box.appendChild(val_X); // add every val to container
@@ -247,7 +302,7 @@
 
 		//Y:
 		const vAY_box = svgElGen('g', { 'id':'valAxY' }); // descrY container
-		// let zeroVAY = svgElGen('text', {            //zero val
+		// let zeroVAY = svgElGen('text', {            //  ?? -- zero val
 		// 	'x': myConf.svgMargin.left - 3,
 		// 	'y': myConf.zeroAxY + 18,
 		// 	'fill':'#333',
@@ -262,16 +317,42 @@
 				'y': ((data.chartSize.height - myConf.svgMargin.bottom) - i*myConf.gradAx_Y) + 6,
 				'fill':'#333',
 				'font-family': ownSet.fontFamily,
+				'font-size':ownSet.fontSize,
 				'text': myConf.gradY*i
 			});
 			vAX_box.appendChild(val_Y); // add every val to container
 		}
 		svgMain.appendChild(vAY_box);
 
+		/*---------------------------------------------------------------------------------------------*/
 
+		//draw chart line
+		function pathmaker(dataArr){
+			return dataArr.slice().reduce(function(totalPath, curr, i){
+				let add;
+				if(i == 0){ add = '';} else { add = 'L';}
+				totalPath += `${add}${(curr.x/myConf.dividerX)+myConf.svgMargin.left}  ${myConf.zeroAxY - (curr.y/myConf.dividerY)}`;
+				return totalPath
+			},'M');
+		}
+
+		let linepoints = pathmaker(data.dataValues);
+
+		let mainLIne = svgElGen('path',{
+			'id':'dataLine',
+			'd': linepoints,
+			'fill': 'none',
+			'stroke': data.colors.line,
+			'stroke-width': '3'
+		});
+
+		svgMain.appendChild(mainLIne);
+
+		/*---------------------------------------------------------------------------------------------*/
 
 		//draw points
-		const pointsBox = svgElGen('g', { 'id':'points-box' });//container for points
+		const ptsBox = svgElGen('g', { 'id':'pts-box' });//container for points
+		const ptsHelpBox = svgElGen('g', { 'id':'pts-help-box' });//container for help points
 
 		data.dataValues.forEach(function(v, i){
 			//main circle
@@ -284,24 +365,93 @@
 				'stroke-width':1,
 				'fill':'red'
 			});
-			pointsBox.appendChild(pt); // add every pt to container
+			ptsBox.appendChild(pt); // add every pt to container
 
 			//circle-helper
 			let pt_h = svgElGen('circle', {
 				'class':'pkt-help',
+				'data-val':i,
 				'cx': (v.x / myConf.dividerX) +  myConf.svgMargin.left,
 				'cy': myConf.zeroAxY - (v.y / myConf.dividerY),
 				'r':7,
-				'opacity': 0.1
+				'opacity': 0
 			});
-			pointsBox.appendChild(pt_h); // add every pt to container
+			ptsHelpBox.appendChild(pt_h); // add every pt to container
 		});
-		svgMain.appendChild(pointsBox);
+		svgMain.appendChild(ptsBox);
+		svgMain.appendChild(ptsHelpBox);
+
+		/*---------------------------------------------------------------------------------------------*/
+
+		svgMain.appendChild(labelcreator()); //create label box
+
+		/*---------------------------------------------------------------------------------------------*/
+
+		whereto.appendChild(svgMain); // append svg in monitor (!) before add event (!)
 
 
-/*-------------------------------------------------------------------------------------------*/
+		/*---------------------------------------------------------------------------------------------*/
+		//events
+		const pts_HBox = document.querySelector('#pts-help-box');
 
-		whereto.appendChild(svgMain); // append svg in monitor
+		pts_HBox.addEventListener('mouseover', function(e){
+
+			const getLabel = document.querySelector('#chartLabel'); // hook to label
+			getLabel.style.display = "block";//show label
+
+			let dispV = data.dataValues[e.target.dataset.val]; //get val from data_for_chart
+			let dispText = `${data.nameXval} = ${dispV.x},  ${data.nameYval} = ${dispV.y}`; // text to display
+
+			const textNode = document.querySelector('#textLabel'); //hook to text_label
+			textNode.textContent = dispText;
+
+			//set parameters of label rectangle
+			let labTextLen = textNode.getComputedTextLength();  // width/length  of val_text
+
+			let pcX = e.target.attributes.cx.value*1; //point position
+			let pcY = e.target.attributes.cy.value*1; //point position
+
+			// correction of label position if > half Ax X:
+ 			let posCorr = 0;
+			if(pcX > myConf.halfAx){
+				posCorr = -labTextLen + 10;
+			}
+
+			//set rectangle/label position
+			const recLab = document.querySelector('#recLabel'); //hook to rect_label
+
+			//width:
+			recLab.setAttribute('width', labTextLen + 20);
+
+			//x-pos
+			let newXpos = +pcX - 15 + posCorr;
+			recLab.setAttribute('x', newXpos);
+			textNode.setAttribute('x', newXpos + 10);
+
+			//y-pos
+			var newYpos = +pcY - 45;
+			recLab.setAttribute('y', newYpos);
+			textNode.setAttribute('y', newYpos + 20);
+
+			//poli - /pointer under rect/
+			const polyLab1 = document.querySelector('#polilabel-1');
+			const polyLab2 = document.querySelector('#polilabel-2');
+			var newPoints1 = `${pcX-5},${pcY-15} ${pcX+5},${pcY-15} ${pcX},${pcY-8}`;
+			var newPoints2 = `${pcX-5},${pcY-16} ${pcX+5},${pcY-16} ${pcX},${pcY-9}`;
+			polyLab1.setAttribute('points', newPoints1 );
+			polyLab2.setAttribute('points', newPoints2 );
+
+		});
+
+		//remove/hide label
+		pts_HBox.addEventListener('mouseout', function(e){
+			const getLabel = document.querySelector('#chartLabel'); // hook to label
+			getLabel.style.display = "none";//hide label
+		});
+
+		/*---------------------------------------------------------------------------------------------*/
 	}
-	return this.MyChart;
+
+	return MyChart;
+
 })()//main

@@ -18,10 +18,10 @@
 		<script src="js/Chart.js"></script>
 		<script>
 			var dataForChart=[
-				{ x: 3, y: 29 },
+				{ x: 3, y: 55 },
 				{ x: 6, y: 44 },
-				{ x: 10, y: 11 },
-				{ x: 15, y: 31 },
+				{ x: 10, y: 33 },
+				{ x: 15, y: 55 },
 				{ x: 17, y: 71 },
 				{ x: 24, y: 63 },
 				{ x: 32, y: 34 },
@@ -30,6 +30,12 @@
 				{ x: 52, y: 39 },
 				{ x: 60, y: 44 },
 				{ x: 66, y: 26 },
+				{ x: 72, y: 34 },
+				{ x: 81, y: 66 },
+				{ x: 99, y: 45 },
+				{ x: 107, y: 33 },
+				{ x: 120, y: 20 },
+				{ x: 130, y: 12 },
 			];
 
 			var chart= new MyChart({
@@ -38,7 +44,7 @@
 				nameXval: "X values",
 				nameYval: "Y values",
 				helpAxes:{
-					X:false,
+					X:true,
 					Y:true
 				},
 				chartSize:{
