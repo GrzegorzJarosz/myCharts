@@ -119,22 +119,85 @@
 		let whereto = document.querySelector(`#${data.container}`);
 		let svgMain = mainSvgGen(data.chartSize.width, data.chartSize.height, data.colors.background, data.container); //create main svg
 
-
-	/*---------------------------------------test---------------------------------------*/
-
-		//some configurations
+		//configurations
 		let myConfiguration = configurator(data);
 		console.log(myConfiguration);
+
+		//main axes
+		//X:
+		let axisX = svgElGen('line', {
+			'x1':myConf.svgMargin.left,
+			'x2':data.chartSize.width-myConf.svgMargin.right,
+			'y1':data.chartSize.height-myConf.svgMargin.bottom,
+			'y2':data.chartSize.height-myConf.svgMargin.bottom,
+			'stroke':'#000',
+			'stroke-width':1
+		});
+		svgMain.appendChild(axisX);
+
+		//Y:
+		let axisY = svgElGen('line', {
+			'x1':myConf.svgMargin.left,
+			'x2':myConf.svgMargin.left,
+			'y1':myConf.svgMargin.top,
+			'y2':data.chartSize.height-myConf.svgMargin.bottom,
+			'stroke':'#000',
+			'stroke-width':1
+		});
+		svgMain.appendChild(axisY);
+
+
+		//help axes
+		function makeHelpLines(){
+			//X help-ax
+			if(data.helpAxes.X == true){
+				let helpAxContainerX = svgElGen('g', { 'id':'pomX' });
+				for(let i = 1; i <= myConf.qtyX; i++ ){
+					let subHLX = svgElGen('line',{
+						'class': 'pom-x',
+						'x1': i * myConf.gradAx_X + myConf.svgMargin.left,
+						'x2': i * myConf.gradAx_X + myConf.svgMargin.left,
+						'y1': myConf.svgMargin.top,
+						'y2': myConf.zeroAxY,
+						'stroke': '#666666',
+						'stroke-linecap': 'round',
+						'stroke-dasharray': '0.2, 3'
+					});
+					helpAxContainerX.appendChild(subHLX);
+				}
+				svgMain.appendChild(helpAxContainerX);
+			}
+
+			//Y help-ax
+			if(data.helpAxes.Y == true){
+				let helpAxContainerY = svgElGen('g', { 'id':'pomY' });
+				for(let i = 1; i <= myConf.qtyY; i++ ){
+					let subHLY = svgElGen('line',{
+						'class': 'pom-y',
+						'x1': myConf.svgMargin.left,
+						'x2': ((myConf.svgMargin.left) + ((data.chartSize.width) - myConf.svgMargin.right-myConf.svgMargin.left)),
+						'y1': ((data.chartSize.height - myConf.svgMargin.bottom) - i*myConf.gradAx_Y),
+						'y2': ((data.chartSize.height - myConf.svgMargin.bottom) - i*myConf.gradAx_Y),
+						'stroke': '#666666',
+						'stroke-linecap': 'round',
+						'stroke-dasharray': '0.2, 3'
+					});
+					helpAxContainerY.appendChild(subHLY);
+				}
+				svgMain.appendChild(helpAxContainerY);
+			}
+		}
+		makeHelpLines();
+
+
 
 		//chart title
 		let chartTitle = svgElGen('text', {'class':'chart-title', 'x':360, 'y':30, 'fill':'#333', 'font-family': ownSet.fontFamily  , 'text':data.title});
 		svgMain.appendChild(chartTitle);
 
-	/*---------------------------------------test---------------------------------------*/
+
 
 		whereto.appendChild(svgMain); // append svg in monitor
 	}
-
 	return this.MyChart;
-
 })()//main
