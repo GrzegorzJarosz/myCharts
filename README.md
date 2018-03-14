@@ -4,7 +4,7 @@
 
 Simple js library for displaying data in a chart. An example index.html has been provided as well.
 
-version 1.0
+version 2.0
 
 ### live
 
@@ -19,18 +19,18 @@ https://grzegorzjarosz.github.io/myCharts/
 3. in your html file:
 
 * in the ```<body>``` section
-insert ```<div id="my-chart"></div>``` (the chart will be drawn in this div. You can use any ID you like, as long as you reference the right one later).
+insert ```<div id="monitor"></div>``` (the chart will be drawn in this div. You can use any ID you like, as long as you reference the right one later).
 * in your own js file or ```<script>``` section insert data for the chart. It should be an object created as follows:
 
 ```
-var dataForChart={dataPoints: [{ x: value, y: value },  ...  , {xn:value n,yn:value n}]};
+var dataForChart = [{ x: value, y: value },  ...  , {xn:value n,yn:value n}];
 ```
 
 * and some required data for the chart as per the example below:
 
 ```
 var chart= new Chart({
-   container: "my-chart",      // id of the div containing the chart (the same as in body section)
+   container: "monitor",      // id of the div containing the chart (the same as in body section)
    title: "My first chart",    // title of the chart
    nameXval: "X values",       // title of X values
    nameYval: "Y values",       // title of Y values
