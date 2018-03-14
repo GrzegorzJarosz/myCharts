@@ -14,20 +14,29 @@
 
 	//configurator
 	function configurator(confData){
-		let margins = { top:50, bottom:50, left:50, right:20 };
-		halfAx = (confData.chartSize.width-margins.left)/1.3;
-		let maxValX = Math.max.apply(Math,(
+		const margins = { top:50, bottom:50, left:50, right:20 };
+		const halfAx =  (confData.chartSize.width-margins.left)/1.3;
+		const maxValX = Math.max.apply(Math,(
 			confData.dataValues.map(function(o){return o.x})
 		));
-		let maxValY = Math.max.apply(Math,(
+		const maxValY = Math.max.apply(Math,(
 			confData.dataValues.map(function(o){return o.y})
 		));
-		minValX = Math.min.apply(Math,(
+		const minValX = Math.min.apply(Math,(
 			confData.dataValues.map(function(o){return o.x})
 		));
-		minValY = Math.min.apply(Math,(
+		const minValY = Math.min.apply(Math,(
 			confData.dataValues.map(function(o){return o.y})
 		));
+		const dividerX = maxValX/(confData.chartSize.width - (margins.left + margins.right)); //graduation x
+		const dividerY = maxValY/(confData.chartSize.height - (margins.top + margins.bottom)); //graduation y
+		const gradX = Math.round((maxValX - minValX) / 10); //grad on x values
+		const gradAx_X = gradX / dividerX; //grad on x ax
+		const qtyX = Math.floor(maxValX/gradX); //quantity x ax
+		const gradY = Math.round(maxValY / 10); //grad on y values
+		const gradAx_Y = gradY / dividerY; //grad on y ax
+		const qtyY = Math.floor(maxValY/gradY); //quantity y ax
+
 		return {
 			svgMargin: margins,
 			halfAx: halfAx,
@@ -35,9 +44,15 @@
 			maxValY: maxValY,
 			minValX: minValX,
 			minValY: minValY,
-			dividerX:maxValX/(confData.chartSize.width-(margins.left+margins.right)),//graduation x
-			dividerY:maxValY/(confData.chartSize.height-(margins.top+margins.bottom)),//graduation y
-			zeroAxY:confData.chartSize.height-margins.bottom//zero axis y
+			dividerX: dividerX,
+			dividerY: dividerY,
+			zeroAxY: confData.chartSize.height-margins.bottom, //zero axis y
+			gradX: gradX,
+			gradAx_X: gradAx_X,
+			qtyX: qtyX,
+			gradY: gradY,
+			gradAx_Y: gradAx_Y,
+			qtyY: qtyY,
 		}
 	}
 
@@ -92,7 +107,7 @@
 			return el;
 		}
 	}
-	
+
 /*------------------------------------------------------------------------------*/
 			////////////////////////////////////////////////////////////////
 			///////////////////////////main/////////////////////////////////
