@@ -12,11 +12,9 @@ https://grzegorzjarosz.github.io/myCharts/
 
 ## How to use
 
-1. You need two files: chart.js and chartStyle.css.
+1. Add a references to Chart.js (body section) in your html file.
 
-2. add a references to chart.js (body section) and chartStyle.css (head section) in your html file.
-
-3. in your html file:
+2. In your html file:
 
 * in the ```<body>``` section
 insert ```<div id="monitor"></div>``` (the chart will be drawn in this div. You can use any ID you like, as long as you reference the right one later).
@@ -50,4 +48,4 @@ var chart= new Chart({
 });
 
 ```
-4. ...and its ready to use...
+3. ...and its ready to use...
